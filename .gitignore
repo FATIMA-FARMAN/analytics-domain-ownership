@@ -1,0 +1,18 @@
+# dbt
+**/target/
+**/dbt_packages/
+**/logs/
+**/package-lock.yml
+**/profiles.yml
+**/profiles.yml.*
+**/*.BAK
+
+# Airflow local
+**/.airflow/
+**/airflow_home/
+**/airflow_venv/
+**/venv/
+
+# OS / editor
+.DS_Store
+.vscode/
