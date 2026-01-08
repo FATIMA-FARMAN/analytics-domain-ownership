@@ -17,3 +17,6 @@
 # dbt profiles / secrets
 **/profiles.yml
 **/.profiles/
+
+**/.github/profiles/
+**/.profiles/
