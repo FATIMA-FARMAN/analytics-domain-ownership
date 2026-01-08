@@ -71,17 +71,6 @@ dbt test
 # Start Airflow → trigger the DAG from the UI
 
 
-
-
-
-
-
-
-
-
-
-
-
 ### Airflow orchestration (UI)
 **DAGs listed / loaded**  
 ![Airflow DAGs list](docs/screenshots/02_airflow_dags_list.png)
@@ -100,4 +89,13 @@ dbt test
 ### Lineage & documentation (optional)
 **dbt docs lineage**  
 ![dbt docs lineage](docs/screenshots/06_dbt_docs_lineage.png)
+
+### Data contracts & tests (dbt)
+- dbt tests passing (People Analytics)
+  - ![dbt test people analytics](docs/screenshots/08_dbt_test_people_analytics.png)
+- dbt tests passing (Payments)
+  - ![dbt test payments](docs/screenshots/09_dbt_test_payments.png)
+
+
+
 
