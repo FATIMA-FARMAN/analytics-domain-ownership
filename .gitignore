@@ -20,3 +20,15 @@
 
 **/.github/profiles/
 **/.profiles/
+
+# dbt local profiles (never commit)
+**/.profiles/
+**/.github/profiles/
+**/profiles.yml
+**/profiles.yaml
+
+# local envs / airflow / logs
+**/.venv/
+**/venv/
+**/.airflow/
+**/logs/
