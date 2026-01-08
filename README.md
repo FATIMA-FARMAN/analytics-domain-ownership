@@ -32,36 +32,44 @@ analytics-domain-ownership/
       dbt_project.yml_
 
 
-## Proof
+## Proof ✅
 
-> Screenshots live in `docs/screenshots/`. Add your images there, then update filenames below if needed.
+> Screenshots live in `docs/screenshots/`. Add/replace images there, then update filenames below if needed.
 
 ### Airflow orchestration (UI)
 - **DAGs listed / loaded**
-  ![Airflow DAGs list](docs/screenshots/02_airflow_dags_list.png)
+  - ![Airflow DAGs list](docs/screenshots/02_airflow_dags_list.png)
 - **Successful DAG run**
-  ![Airflow run success](docs/screenshots/03_airflow_run_success.png)
+  - ![Airflow run success](docs/screenshots/03_airflow_run_success.png)
 
 ### dbt execution
-- **dbt run graph / results**
-  ![dbt run graph](docs/screenshots/04_dbt_run_graph.png)
+- **dbt execution proof**
+  - ![dbt execution proof](docs/screenshots/04_dbt_run_graph.png)
 
 ### BigQuery deployment
 - **Dataset models (tables/views)**
-  ![BigQuery dataset models](docs/screenshots/05_bigquery_dataset_models.png)
+  - ![BigQuery dataset models](docs/screenshots/05_bigquery_dataset_models.png)
 
 ### Lineage & documentation (optional)
 - **dbt docs lineage**
-  ![dbt docs lineage](docs/screenshots/06_dbt_docs_lineage.png)
+  - ![dbt docs lineage](docs/screenshots/06_dbt_docs_lineage.png)
 
 ## Quickstart (local)
-
 ```bash
-cd domains/<domain>          # e.g., domains/people_analytics or domains/payments
+# from repo root
+cd domains/<domain>   # e.g., domains/people_analytics or domains/payments
+
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
 dbt deps
 dbt debug
 dbt run
 dbt test
+
+# Start Airflow → trigger the DAG from the UI
+
 
 
 
