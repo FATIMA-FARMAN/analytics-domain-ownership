@@ -81,3 +81,23 @@ dbt test
 
 
 
+
+### Airflow orchestration (UI)
+**DAGs listed / loaded**  
+![Airflow DAGs list](docs/screenshots/02_airflow_dags_list.png)
+
+**Successful DAG run**  
+![Airflow run success](docs/screenshots/03_airflow_run_success.png)
+
+### dbt execution
+**dbt execution proof**  
+![dbt execution proof](docs/screenshots/04_dbt_run_graph.png)
+
+### BigQuery deployment
+**Dataset models (tables/views)**  
+![BigQuery dataset models](docs/screenshots/05_bigquery_dataset_models.png)
+
+### Lineage & documentation (optional)
+**dbt docs lineage**  
+![dbt docs lineage](docs/screenshots/06_dbt_docs_lineage.png)
+
