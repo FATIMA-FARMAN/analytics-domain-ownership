@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -26,8 +28,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install "dbt-core==1.11.2" "dbt-bigquery==1.11.0"
 
+      - name: Debug paths
+        run: |
+          echo "GITHUB_WORKSPACE=${{ github.workspace }}"
+          ls -la "${{ github.workspace }}"
+          ls -la "${{ github.workspace }}/.github" || true
+          ls -la "${{ github.workspace }}/.github/profiles" || true
+          ls -la "${{ github.workspace }}/domains/people_analytics" || true
+
       - name: dbt deps
-        run: dbt deps --project-dir domains/people_analytics --profiles-dir .github/profiles --no-use-colors
+        run: |
+          dbt deps \
+            --project-dir "${{ github.workspace }}/domains/people_analytics" \
+            --profiles-dir "${{ github.workspace }}/.github/profiles" \
+            --no-use-colors
 
       - name: dbt parse
-        run: dbt parse --project-dir domains/people_analytics --profiles-dir .github/profiles --no-use-colors
+        run: |
+          dbt parse \
+            --project-dir "${{ github.workspace }}/domains/people_analytics" \
+            --profiles-dir "${{ github.workspace }}/.github/profiles" \
+            --no-use-colors
