@@ -38,3 +38,8 @@
 /dbt_packages/
 /target/
 /logs/
+
+# dbt artifacts
+/dbt_packages/
+/target/
+/logs/
