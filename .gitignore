@@ -33,3 +33,8 @@
 **/.airflow/
 **/logs/
 .github/profiles/user.yml
+
+# dbt artifacts
+/dbt_packages/
+/target/
+/logs/
