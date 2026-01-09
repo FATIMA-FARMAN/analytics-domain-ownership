@@ -49,10 +49,4 @@ jobs:
             --project-dir "${{ github.workspace }}/domains/people_analytics" \
             --profiles-dir "${{ github.workspace }}/.github/profiles" \
             --no-use-colors
-- name: Checkout
-  uses: actions/checkout@v4
-  with:
-    fetch-depth: 0
-    submodules: false
-- name: dbt compile
-  run: dbt compile --project-dir domains/people_analytics --profiles-dir .github/profiles --no-use-colors
+
