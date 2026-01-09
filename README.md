@@ -136,36 +136,38 @@ To avoid unnecessary warehouse spend on every change:
 ```mermaid
 flowchart TB
 
-subgraph ORCH["Airflow Orchestration"]
-  DAG["dag_dbt_people_domain"] --> DEPS["dbt deps"] --> RUN["dbt run"] --> TEST["dbt test"]
-end
+  subgraph ORCH["Airflow Orchestration"]
+    DAG["dag_dbt_people_domain"] --> DEPS["dbt deps"] --> RUN["dbt run"] --> TEST["dbt test"]
+  end
 
-subgraph SRC["Sources"]
-  HRIS["HRIS"]
-  ATS["ATS"]
-  PERF["Performance"]
-  COMP["Compensation"]
-end
+  subgraph SRC["Sources"]
+    HRIS["HRIS"]
+    ATS["ATS"]
+    PERF["Performance"]
+    COMP["Compensation"]
+  end
 
-subgraph STG["Staging"]
-  STG_HRIS["stg_hris_employees"]
-  STG_ATS["stg_ats_candidates"]
-  STG_PERF["stg_perf_reviews"]
-  STG_COMP["stg_comp_salaries"]
-end
+  subgraph STG["Staging"]
+    STG_HRIS["stg_hris_employees"]
+    STG_ATS["stg_ats_candidates"]
+    STG_PERF["stg_perf_reviews"]
+    STG_COMP["stg_comp_salaries"]
+  end
 
-subgraph INT["Intermediate"]
-  INT_EMP["int_employee_enriched"]
-  INT_FUN["int_hiring_funnel_steps"]
-end
+  subgraph INT["Intermediate"]
+    INT_EMP["int_employee_enriched"]
+    INT_FUN["int_hiring_funnel_steps"]
+  end
 
-subgraph MART["Marts"]
-  DIM_EMP["dim_employee"]
-  FCT_FUN["fct_hiring_funnel"]
-end
+  subgraph MART["Marts"]
+    DIM_EMP["dim_employee"]
+    FCT_FUN["fct_hiring_funnel"]
+  end
 
-HRIS --> STG_HRIS --> INT_EMP --> DIM_EMP
-ATS  --> STG_ATS  --> INT_FUN --> FCT_FUN
-PERF --> STG_PERF --> INT_EMP
-COMP --> STG_COMP --> INT_EMP
+  HRIS --> STG_HRIS
+  ATS --> STG_ATS
+  PERF --> STG_PERF
+  COMP --> STG_COMP
 
+  STG_HRIS --> INT_EMP --> DIM_EMP
+  STG_ATS --> INT_FUN --> FCT_FUN
