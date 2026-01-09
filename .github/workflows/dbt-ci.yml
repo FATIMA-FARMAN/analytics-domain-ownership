@@ -30,8 +30,10 @@ jobs:
 
       - name: dbt deps
         run: |
-          dbt deps \
-            --project-dir domains/people_analytics \
-            --profiles-dir .github/profiles \
-            --no-use-color
+          dbt deps --project-dir domains/people_analytics --profiles-dir .github/profiles --no-use-colors
+
+      - name: dbt parse
+        run: |
+          dbt parse --project-dir domains/people_analytics --profiles-dir .github/profiles --no-use-colors
+
 
