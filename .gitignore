@@ -32,3 +32,4 @@
 **/venv/
 **/.airflow/
 **/logs/
+.github/profiles/user.yml
