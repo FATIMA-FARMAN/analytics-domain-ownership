@@ -8,16 +8,18 @@ on:
 permissions:
   contents: read
 
+job
+
 jobs:
   dbt-ci:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-           submodules: false
+          fetch-depth: 1
+          submodules: false
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -27,14 +29,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install "dbt-core==1.11.2" "dbt-bigquery==1.11.0"
-
-      - name: Debug paths
-        run: |
-          echo "GITHUB_WORKSPACE=${{ github.workspace }}"
-          ls -la "${{ github.workspace }}"
-          ls -la "${{ github.workspace }}/.github" || true
-          ls -la "${{ github.workspace }}/.github/profiles" || true
-          ls -la "${{ github.workspace }}/domains/people_analytics" || true
 
       - name: dbt deps
         run: |
@@ -49,4 +43,3 @@ jobs:
             --project-dir "${{ github.workspace }}/domains/people_analytics" \
             --profiles-dir "${{ github.workspace }}/.github/profiles" \
             --no-use-colors
-
