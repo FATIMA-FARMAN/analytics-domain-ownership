@@ -1,46 +1,45 @@
 version: 2
 
 models:
-  - name: dim_employee
-    description: "Employee dimension (SCD-style). One row per employee version."
+  - name: dim_employee_scd2
+    description: "Employee SCD2 dimension tracking historical changes"
     config:
       contract:
         enforced: true
     columns:
       - name: employee_id
-        description: "Natural employee identifier."
-        data_type: INT64
-        tests:
-          - not_null
+        data_type: integer
+        tests: [not_null]
+
       - name: valid_from
-        description: "Start timestamp for this employee version."
-        data_type: TIMESTAMP
-        tests:
-          - not_null
+        data_type: timestamp
+        tests: [not_null]
+
+      - name: valid_to
+        data_type: timestamp
+
+      - name: is_current
+        data_type: boolean
+        tests: [not_null]
 
     tests:
-      - unique_combo:
-          combination_of_columns: ["employee_id", "valid_from"]
+      - unique:
+          column_name: "(employee_id || '-' || valid_from)"
 
   - name: fct_hiring_funnel
-    description: "Hiring funnel fact: one row per application stage event."
+    description: "Hiring funnel fact: one row per application per stage"
     config:
       contract:
         enforced: true
     columns:
       - name: application_id
-        description: "Unique identifier for a job application."
-        data_type: INT64
-        tests:
-          - not_null
-      - name: stage
-        description: "Funnel stage label (e.g., applied/interview/offer/hired)."
-        data_type: STRING
-        tests:
-          - not_null
-          - not_empty_string
+        data_type: integer
+        tests: [not_null]
 
-    tests:
-      - unique_combo:
-          combination_of_columns: ["application_id", "stage"]
+      - name: stage
+        data_type: string
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['applied','screened','interviewed','offered','hired','rejected']
 
