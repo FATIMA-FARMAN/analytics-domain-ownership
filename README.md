@@ -35,7 +35,12 @@ analytics-domain-ownership/
 
 ## Proof ✅
 
-> Screenshots live in `docs/screenshots/`. Add/replace images there, then update filenames below if needed.
+(BigQuery Sandbox Incremental)
+
+- Compiled incremental SQL (shows incremental filter): `assets/proof/compiled_fct_hiring_funnel_incremental.sql`
+- Screenshot: `assets/proof/12_incremental_compiled_sql.png`
+
+> Note: BigQuery Sandbox blocks DML. `--full-refresh` works (CREATE TABLE). Incremental merge/upserts require billing.
 
 ### Airflow orchestration (UI)
 - **DAGs listed / loaded**
