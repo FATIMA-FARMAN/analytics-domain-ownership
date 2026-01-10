@@ -107,12 +107,14 @@ This model is implemented as a dbt incremental model with a timestamp-based filt
 
 In BigQuery Sandbox (free tier), DML operations required for incremental runs
 (e.g. MERGE / INSERT) are not permitted. As a result:
-
 - `dbt compile` demonstrates correct incremental SQL generation
 - `dbt run --full-refresh` succeeds (DDL only)
 - Standard incremental runs are intentionally blocked by the warehouse
-
 This is a known BigQuery Sandbox limitation, not a modeling issue.
+
+**Note (BigQuery Sandbox):** Standard incremental runs require DML (MERGE/INSERT), which is blocked in BigQuery Sandbox (free tier).  
+This repo includes compiled SQL proof + a successful `--full-refresh` run to demonstrate the incremental pattern.
+
 
 
 ### Materialization strategy
