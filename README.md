@@ -160,4 +160,10 @@ flowchart TB
   STG_HRIS --> INT_EMP --> DIM_EMP
   STG_ATS --> INT_FUN --> FCT_FUN
 
+<<<<<<< HEAD
+=======
+## QA proof (dbt)
+- Automated QA runner: `python qa/run_qa.py`
+- Latest report: `qa/reports/qa_report.md` (includes dbt parse/compile + **dbt test PASS=13**)
+>>>>>>> f5114b8 (Docs: add QA proof link in README)
 
