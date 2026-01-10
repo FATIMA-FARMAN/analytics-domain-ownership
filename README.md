@@ -1,34 +1,60 @@
-# Analytics Domain Ownership (dbt + BigQuery + Airflow)
+# Analytics Domain Ownership  
+**dbt · BigQuery · Airflow · CI · Data Contracts**
+
 [![dbt CI (PR checks)](https://github.com/FATIMA-FARMAN/analytics-domain-ownership/actions/workflows/dbt-ci.yml/badge.svg)](https://github.com/FATIMA-FARMAN/analytics-domain-ownership/actions/workflows/dbt-ci.yml)
 
-Domain ownership portfolio demonstrating **analytics engineering patterns** across **People Analytics** and **Payments** domains: dbt modeling, BigQuery cost-aware materialization, Airflow orchestration, tests/contracts, and lineage documentation.
+End-to-end analytics engineering portfolio demonstrating **domain ownership** across **People Analytics** and **Payments**.  
+Focus areas include dbt modeling, cost-aware BigQuery patterns, Airflow orchestration, data contracts/tests, and lineage documentation.
 
+---
+
+## What this proves (25-second recruiter scan)
+
+- Owns an analytics **domain end-to-end**
+- Designs **staging → intermediate → marts (dim/fct)** intentionally
+- Implements **incremental models** under BigQuery Sandbox constraints
+- Enforces **data contracts & tests**
+- Orchestrates dbt workflows with **Airflow**
+- Ships **verifiable proof**, not claims
 
 ---
 
 ## What this project demonstrates
 
-- **Domain ownership**: each domain lives under `domains/<domain>/` with a consistent, maintainable structure.
-- **Warehouse modeling discipline**: `staging → intermediate → marts (dim/fct)` with intentional materialization choices.
-- **Cost-aware BigQuery patterns**: avoid `SELECT *`, reuse intermediates for expensive joins, and plan for partitioning/clustering on large facts.
-- **Operational workflows**: Airflow DAGs orchestrate dbt runs; repo is cleaned to avoid committing generated artifacts (venv/logs/target).
-- **Data quality + governance**: dbt tests and schema definitions support reliable downstream consumption.
-- **Documentation + lineage**: dbt docs/lineage used for model discovery and impact analysis.
+- **Domain ownership**  
+  Each domain lives under `domains/<domain>/` with isolated models, tests, seeds, and DAGs.
+
+- **Warehouse modeling discipline**  
+  Clear separation of staging, intermediate, and marts with intentional materialization choices.
+
+- **Cost-aware BigQuery patterns**  
+  Avoid `SELECT *`, reuse intermediates for expensive joins, and plan partitioning/clustering for large facts.
+
+- **Operational workflows**  
+  Airflow DAGs orchestrate dbt runs; generated artifacts (venv/logs/target) are excluded from version control.
+
+- **Data quality & governance**  
+  Schema contracts and dbt tests ensure reliable downstream consumption.
+
+- **Documentation & lineage**  
+  dbt docs lineage and architecture diagrams support impact analysis and discovery.
+
+---
 
 ## Proof / Evidence (recruiter scan)
 
-- ✅ **Incremental compiled SQL proof (BigQuery Sandbox)**
-  - `assets/proof/compiled_fct_hiring_funnel_incremental.sql`
+- ✅ **Incremental compiled SQL proof (BigQuery Sandbox)**  
+  - `assets/proof/compiled_fct_hiring_funnel_incremental.sql`  
   - ![Incremental compiled SQL proof](assets/proof/12_incremental_compiled_sql.png)
 
-- ✅ **Fix incremental model casting and demo seed**
-  - `domains/people_analytics/models/marts/fct_hiring_funnel_incremental.sql`
+- ✅ **Fix incremental model casting and demo seed**  
+  - `domains/people_analytics/models/marts/fct_hiring_funnel_incremental.sql`  
   - `domains/people_analytics/seeds/hiring_events_incremental_demo.csv`
 
-- ✅ **Harden dbt contracts for SCD2 and hiring funnel marts**
+- ✅ **Harden dbt contracts for SCD2 and hiring funnel marts**  
   - `models/marts/schema.yml` (key marts)
 
-- ✅ **dbt test execution proof (PASS=13)**
+- ✅ **dbt test execution proof (PASS=13)**  
   - ![dbt test execution proof](assets/proof/10_dbt_test_people_analytics.png)
 
 ---
@@ -46,131 +72,57 @@ analytics-domain-ownership/
       tests/
       macros/
       packages.yml
-      dbt_project.yml_
-
-
-## Proof ✅
-
-(BigQuery Sandbox Incremental)
-
-- Compiled incremental SQL (shows incremental filter): `assets/proof/compiled_fct_hiring_funnel_incremental.sql`
-- Screenshot: `assets/proof/12_incremental_compiled_sql.png`
-
-> Note: BigQuery Sandbox blocks DML. `--full-refresh` works (CREATE TABLE). Incremental merge/upserts require billing.
-
-### Airflow orchestration (UI)
-- **DAGs listed / loaded**
-  - ![Airflow DAGs list](docs/screenshots/02_airflow_dags_list.png)
-- **Successful DAG run**
-  - ![Airflow run success](docs/screenshots/03_airflow_run_success.png)
-
-### dbt execution
-- **dbt execution proof**
-  - ![dbt execution proof](docs/screenshots/04_dbt_run_graph.png)
-
-### BigQuery deployment
-- **Dataset models (tables/views)**
-  - ![BigQuery dataset models](docs/screenshots/05_bigquery_dataset_models.png)
-
-### Lineage & documentation (optional)
-- **dbt docs lineage**
-  - ![dbt docs lineage](docs/screenshots/06_dbt_docs_lineage.png)
-
-## Quickstart (local)
-```bash
-# from repo root
-cd domains/<domain>   # e.g., domains/people_analytics or domains/payments
-
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-
-dbt deps
-dbt debug
-dbt run
-dbt test
-
-# Start Airflow → trigger the DAG from the UI
-
-
-### Airflow orchestration (UI)
-**DAGs listed / loaded**  
-![Airflow DAGs list](docs/screenshots/02_airflow_dags_list.png)
-
-**Successful DAG run**  
-![Airflow run success](docs/screenshots/03_airflow_run_success.png)
-
-### dbt execution
-**dbt execution proof**  
-![dbt execution proof](docs/screenshots/04_dbt_run_graph.png)
-
-### BigQuery deployment
-**Dataset models (tables/views)**  
-![BigQuery dataset models](docs/screenshots/05_bigquery_dataset_models.png)
-
-### Lineage & documentation (optional)
-**dbt docs lineage**  
-![dbt docs lineage](docs/screenshots/06_dbt_docs_lineage.png)
-
-### Data contracts & tests (dbt)
-- dbt tests passing (People Analytics)
-  - ![dbt test people analytics](docs/screenshots/08_dbt_test_people_analytics.png)
-- dbt tests passing (Payments)
-  - ![dbt test payments](docs/screenshots/09_dbt_test_payments.png)
 
 ## Cost-aware warehouse notes (BigQuery)
 
-This repository is intentionally structured to showcase **cost-aware analytics engineering** on BigQuery—optimizing for **lower scan cost**, **fast iteration**, and **predictable materialization choices**.
+This repository is intentionally structured to demonstrate **cost-aware analytics engineering** on BigQuery—optimizing for **lower scan cost**, **predictable materialization**, and **fast iteration**.
 
 ### Incremental model note (BigQuery Sandbox)
 
-This model is implemented as a dbt incremental model with a timestamp-based filter.
+The hiring funnel fact is implemented as a **dbt incremental model** with a timestamp-based filter.
 
-In BigQuery Sandbox (free tier), DML operations required for incremental runs
-(e.g. MERGE / INSERT) are not permitted. As a result:
-- `dbt compile` demonstrates correct incremental SQL generation
-- `dbt run --full-refresh` succeeds (DDL only)
-- Standard incremental runs are intentionally blocked by the warehouse
-This is a known BigQuery Sandbox limitation, not a modeling issue.
+BigQuery Sandbox (free tier) blocks DML operations required for incremental runs (e.g. **MERGE / INSERT**). As a result:
 
-**Note (BigQuery Sandbox):** Standard incremental runs require DML (MERGE/INSERT), which is blocked in BigQuery Sandbox (free tier).  
-This repo includes compiled SQL proof + a successful `--full-refresh` run to demonstrate the incremental pattern.
+- `dbt compile` demonstrates correct incremental SQL generation  
+- `dbt run --full-refresh` succeeds (DDL only)  
+- Standard incremental runs require billing to execute  
 
+This is a **warehouse limitation**, not a modeling issue.
 
+---
 
 ### Materialization strategy
 
-- **Staging (`stg_*`)**: materialized as **views** to keep the warehouse lightweight and avoid duplicating raw/source data.
-- **Intermediate (`int_*`)**: materialized as **tables** only when it pays off (reused joins/transforms that would otherwise be recomputed).
-- **Marts (`dim_*`, `fct_*`)**: tuned for consumption.
-  - Use **views** when you want low storage and acceptable latency.
-  - Use **tables** when you need consistent dashboard performance or heavy reuse.
+- **Staging (`stg_*`)** → materialized as **views**  
+- **Intermediate (`int_*`)** → materialized as **tables** only when reused  
+- **Marts (`dim_*`, `fct_*`)** → **views or tables** depending on access patterns and performance needs
+
+---
 
 ### Query efficiency principles
 
-- Avoid `SELECT *` in marts; project only required columns to reduce **bytes scanned**.
-- Centralize expensive logic into reusable intermediate models to prevent repeated recomputation across marts.
-- Prefer BI-friendly marts to reduce query complexity and improve interactive performance.
+- Avoid `SELECT *` in marts to reduce **bytes scanned**
+- Centralize expensive joins and transformations in reusable intermediate models
+- Optimize marts for **BI-friendly consumption** and interactive performance
+
+---
 
 ### Partitioning & clustering (production pattern)
 
-For large fact tables (e.g., `fct_*`):
-- **Partition** by a date column (e.g., `event_date`, `snapshot_date`) to reduce scanned partitions.
-- **Cluster** by common filter/join keys (e.g., `employee_id`, `department_id`) to improve pruning and join efficiency.
-- Result: **lower scan cost** and **faster interactive queries**.
+For large fact tables:
 
-### Sandbox / billing constraints
+- **Partition** by a date column (e.g. `event_date`, `snapshot_date`)
+- **Cluster** by common join or filter keys (e.g. `employee_id`, `department_id`)
+- **Result:** lower scan cost and faster interactive queries
 
-- BigQuery Sandbox may restrict some **DML** operations; snapshot-style **SCD2** workflows typically require a billing-enabled project.
-- This repo includes a **local proof path (DuckDB)** for incremental/SCD2 patterns when warehouse DML is restricted, while keeping BigQuery models focused on cost-aware views/tables.
+---
 
 ### CI as a cost guardrail
 
 To avoid unnecessary warehouse spend on every change:
-- GitHub Actions runs `dbt deps` + `dbt parse` as a lightweight validation gate.
-- Optionally run targeted `dbt test` on key marts (primary keys + relationships) instead of full refreshes.
 
-```mermaid
+- GitHub Actions runs `dbt deps` + `dbt parse` as lightweight validation
+- Targeted `dbt test` on key marts instead of full refreshes
 flowchart TB
 
   subgraph ORCH["Airflow Orchestration"]
