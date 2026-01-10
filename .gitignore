@@ -43,3 +43,6 @@
 /dbt_packages/
 /target/
 /logs/
+
+# Local QA backups
+qa/*.bak.*
