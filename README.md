@@ -8,7 +8,7 @@ Focus areas include dbt modeling, cost-aware BigQuery patterns, Airflow orchestr
 
 ---
 
-## What this proves (25-second recruiter scan)
+## What this proves 
 
 - Owns an analytics **domain end-to-end**
 - Designs **staging → intermediate → marts (dim/fct)** intentionally
