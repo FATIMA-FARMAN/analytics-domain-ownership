@@ -36,10 +36,6 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
 
 ---
 
-## Architecture & lineage
-
-
-
 ## What this project demonstrates
 
 - **Domain ownership (data-product layout)**  
@@ -121,6 +117,9 @@ To avoid unnecessary warehouse spend on every change:
 
 - GitHub Actions runs `dbt deps` + `dbt parse` as lightweight validation
 - Run **targeted** `dbt test` on key marts instead of full refreshes
+-------
+
+## Architecture & lineage
 
 ```mermaid
 flowchart TB
