@@ -101,6 +101,11 @@ dbt test
 
 This repository is intentionally structured to showcase **cost-aware analytics engineering** on BigQuery—optimizing for **lower scan cost**, **fast iteration**, and **predictable materialization choices**.
 
+### Incremental loads (cost-aware)
+This project demonstrates **incremental dbt modeling** on BigQuery to avoid full refresh cost on large facts.
+- Example: `fct_hiring_funnel_incremental` is built incrementally using an `event_date` filter.
+- Benefit: processes only new/changed data per run, reducing warehouse scan cost and runtime.
+
 ### Materialization strategy
 
 - **Staging (`stg_*`)**: materialized as **views** to keep the warehouse lightweight and avoid duplicating raw/source data.
