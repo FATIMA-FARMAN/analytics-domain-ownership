@@ -101,10 +101,19 @@ dbt test
 
 This repository is intentionally structured to showcase **cost-aware analytics engineering** on BigQuery—optimizing for **lower scan cost**, **fast iteration**, and **predictable materialization choices**.
 
-### Incremental loads (cost-aware)
-This project demonstrates **incremental dbt modeling** on BigQuery to avoid full refresh cost on large facts.
-- Example: `fct_hiring_funnel_incremental` is built incrementally using an `event_date` filter.
-- Benefit: processes only new/changed data per run, reducing warehouse scan cost and runtime.
+### Incremental model note (BigQuery Sandbox)
+
+This model is implemented as a dbt incremental model with a timestamp-based filter.
+
+In BigQuery Sandbox (free tier), DML operations required for incremental runs
+(e.g. MERGE / INSERT) are not permitted. As a result:
+
+- `dbt compile` demonstrates correct incremental SQL generation
+- `dbt run --full-refresh` succeeds (DDL only)
+- Standard incremental runs are intentionally blocked by the warehouse
+
+This is a known BigQuery Sandbox limitation, not a modeling issue.
+
 
 ### Materialization strategy
 
