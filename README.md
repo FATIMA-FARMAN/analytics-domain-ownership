@@ -15,6 +15,22 @@ Domain ownership portfolio demonstrating **analytics engineering patterns** acro
 - **Data quality + governance**: dbt tests and schema definitions support reliable downstream consumption.
 - **Documentation + lineage**: dbt docs/lineage used for model discovery and impact analysis.
 
+## Proof / Evidence (recruiter scan)
+
+- ✅ **Incremental compiled SQL proof (BigQuery Sandbox)**
+  - `assets/proof/compiled_fct_hiring_funnel_incremental.sql`
+  - ![Incremental compiled SQL proof](assets/proof/12_incremental_compiled_sql.png)
+
+- ✅ **Fix incremental model casting and demo seed**
+  - `domains/people_analytics/models/marts/fct_hiring_funnel_incremental.sql`
+  - `domains/people_analytics/seeds/hiring_events_incremental_demo.csv`
+
+- ✅ **Harden dbt contracts for SCD2 and hiring funnel marts**
+  - `models/marts/schema.yml` (key marts)
+
+- ✅ **dbt test execution proof (PASS=13)**
+  - ![dbt test execution proof](assets/proof/10_dbt_test_people_analytics.png)
+
 ---
 
 ## Repository structure
