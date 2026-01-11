@@ -46,3 +46,6 @@
 
 # Local QA backups
 qa/*.bak.*
+
+# Local backups
+*.bak
