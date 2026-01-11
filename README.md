@@ -121,47 +121,17 @@ To avoid unnecessary warehouse spend on every change:
 
 ## Architecture & lineage
 
+See `docs/lineage.md` for full lineage.
+
 ```mermaid
-flowchart TB
+flowchart LR
+  A[Sources] --> B[Staging: stg_*]
+  B --> C[Intermediate: int_*]
+  C --> D[Marts: dim_* / fct_*]
+  D --> E[QA report: qa/reports/qa_report.md]
+```
 
-  subgraph ORCH["Airflow Orchestration"]
-    DAG["dag_dbt_people_domain"] --> DEPS["dbt deps"] --> RUN["dbt run"] --> TEST["dbt test"]
-  end
 
-  subgraph SRC["Sources"]
-    HRIS["HRIS"]
-    ATS["ATS"]
-    PERF["Performance"]
-    COMP["Compensation"]
-  end
-
-  subgraph STG["Staging"]
-    STG_HRIS["stg_hris_employees"]
-    STG_ATS["stg_ats_candidates"]
-    STG_PERF["stg_perf_reviews"]
-    STG_COMP["stg_comp_salaries"]
-  end
-
-  subgraph INT["Intermediate"]
-    INT_EMP["int_employee_enriched"]
-    INT_FUN["int_hiring_funnel_steps"]
-  end
-
-  subgraph MART["Marts"]
-    DIM_EMP["dim_employee"]
-    FCT_FUN["fct_hiring_funnel"]
-  end
-
-  HRIS --> STG_HRIS
-  ATS --> STG_ATS
-  PERF --> STG_PERF
-  COMP --> STG_COMP
-
-  STG_HRIS --> INT_EMP --> DIM_EMP
-  STG_ATS --> INT_FUN --> FCT_FUN
-
-<<<<<<< HEAD
-=======
 ## QA proof (dbt)
 - Automated QA runner: `python qa/run_qa.py`
 - Latest report: `qa/reports/qa_report.md` (includes dbt parse/compile + **dbt test PASS=13**)
