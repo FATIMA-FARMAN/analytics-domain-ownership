@@ -35,7 +35,8 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
   - `domains/people_analytics/models/marts/schema.yml` (key marts + contract-style checks)
 
 ### Looker Studio — Hiring Funnel Overview (Dashboard Proof)
-![Hiring Funnel Overview](domains/people_analytics/assets/proof/14_looker_hiring_funnel_overview.png)
+![Hiring Funnel Overview](14_looker_hiring_funnel_overview.png)
+
 
 ---
 
