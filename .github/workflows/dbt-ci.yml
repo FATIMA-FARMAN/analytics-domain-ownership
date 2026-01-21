@@ -32,13 +32,13 @@ jobs:
       - name: dbt deps
         run: |
           dbt deps \
-            --project-dir "${{ github.workspace }}/domains/people_analytics_dbt-dbt" \
+            --project-dir "${{ github.workspace }}/domains/people_analytics_dbt" \
             --profiles-dir "${{ github.workspace }}/.github/profiles" \
             --no-use-colors
 
       - name: dbt parse
         run: |
           dbt parse \
-            --project-dir "${{ github.workspace }}/domains/people_analytics_dbt-dbt" \
+            --project-dir "${{ github.workspace }}/domains/people_analytics_dbt" \
             --profiles-dir "${{ github.workspace }}/.github/profiles" \
             --no-use-colors
