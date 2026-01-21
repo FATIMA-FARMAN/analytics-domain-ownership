@@ -32,7 +32,7 @@ jobs:
       - name: dbt deps
         run: |
           dbt deps \
-            --project-dir "${{ github.workspace }}/domains/people_analytics_dbt" \
+            --project-dir "${{ github.workspace }}/domains/people_analytics" \
             --profiles-dir "${{ github.workspace }}/.github/profiles" \
             --no-use-colors
 
