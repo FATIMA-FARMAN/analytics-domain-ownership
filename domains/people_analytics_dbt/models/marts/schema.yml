@@ -1,0 +1,222 @@
+version: 2
+
+models:
+  - name: dim_employee
+    description: "Employee dimension (SCD-style). One row per employee version."
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: employee_id
+        description: "Natural employee identifier."
+        data_type: INT64
+        tests:
+          - not_null
+
+      - name: valid_from
+        description: "Start timestamp for this employee version."
+        data_type: TIMESTAMP
+        tests:
+          - not_null
+
+    tests:
+      - unique_combo:
+          combination_of_columns: ["employee_id", "valid_from"]
+
+  - name: fct_hiring_funnel
+    description: "Hiring funnel fact: one row per application stage event."
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: application_id
+        description: "Unique identifier for a job application."
+        data_type: INT64
+        tests:
+          - not_null
+
+      - name: stage
+        description: "Funnel stage label (e.g., applied/interview/offer/hired)."
+        data_type: STRING
+        tests:
+          - not_null
+
+    tests:
+      - unique_combo:
+          combination_of_columns: ["application_id", "stage"]
+
+  - name: fct_funnel_conversion_daily
+    description: "Daily funnel stage-to-next-stage conversion rate based on candidate stage events."
+    columns:
+      - name: event_date
+        description: "Date of the funnel events."
+        tests:
+          - not_null
+
+      - name: from_stage
+        description: "Stage the candidate is converting from (e.g., Applied)."
+        tests:
+          - not_null
+
+      - name: to_stage
+        description: "Next stage (e.g., Screen)."
+        tests:
+          - not_null
+
+      - name: entered_candidates
+        description: "Number of distinct candidates who entered the stage on that day."
+        tests:
+          - not_null
+
+      - name: progressed_candidates
+        description: "Number of distinct candidates who progressed to next stage on that day."
+        tests:
+          - not_null
+
+  - name: fct_stage_dropoff_daily
+    description: "Daily stage drop-off rate per stage (1 - progression rate)."
+    columns:
+      - name: event_date
+        description: "Date of the funnel events."
+        tests:
+          - not_null
+
+      - name: from_stage
+        description: "Stage candidates are in on that day."
+        tests:
+          - not_null
+
+      - name: entered_candidates
+        description: "Candidates who entered the stage on that day."
+        tests:
+          - not_null
+
+      - name: progressed_candidates
+        description: "Candidates who progressed to the next stage on that day."
+        tests:
+          - not_null
+
+      - name: stage_conversion_rate
+        description: "Conversion rate from stage to next stage."
+        tests:
+          - not_null
+
+      - name: stage_dropoff_rate
+        description: "Drop-off rate for the stage (1 - conversion rate)."
+        tests:
+          - not_null
+
+  - name: fct_top_dropoff_stage_daily
+    description: "Top drop-off stage per day (highest drop-off rate). Executive KPI summary."
+    columns:
+      - name: event_date
+        description: "Date of the funnel events."
+        tests:
+          - not_null
+
+      - name: top_dropoff_stage
+        description: "Stage with the highest drop-off rate on that day."
+        tests:
+          - not_null
+
+      - name: top_dropoff_rate
+        description: "Highest drop-off rate value for that day."
+        tests:
+          - not_null
+
+  - name: fct_worst_conversion_transition_daily
+    description: "Worst performing stage-to-stage conversion transition per day (lowest conversion rate)."
+    columns:
+      - name: event_date
+        description: "Date of the conversion transition."
+        tests:
+          - not_null
+
+      - name: from_stage
+        description: "Starting stage."
+        tests:
+          - not_null
+
+      - name: to_stage
+        description: "Next stage."
+        tests:
+          - not_null
+
+      - name: conversion_rate
+        description: "Conversion rate from from_stage to to_stage for that day."
+        tests:
+          - not_null
+
+  - name: fct_overall_funnel_conversion_daily
+    description: "Daily overall funnel conversion rate (progressed / entered). Executive KPI summary."
+    columns:
+      - name: event_date
+        description: "Date of the funnel events."
+        tests:
+          - not_null
+
+      - name: total_entered_candidates
+        description: "Total candidates who entered any transition stage on that day."
+        tests:
+          - not_null
+
+      - name: total_progressed_candidates
+        description: "Total candidates who progressed to the next stage on that day."
+        tests:
+          - not_null
+
+      - name: overall_conversion_rate
+        description: "Overall funnel conversion rate for the day."
+        tests:
+          - not_null
+
+
+  - name: fct_stage_dropoff_counts_daily
+    description: "Daily drop-off counts per stage (entered vs progressed) + dropoff rate."
+    columns:
+      - name: event_date
+        tests:
+          - not_null
+
+      - name: stage
+        tests:
+          - not_null
+
+      - name: total_entered_candidates
+        tests:
+          - not_null
+
+      - name: dropped_candidates
+        tests:
+          - not_null
+
+      - name: dropoff_rate
+        tests:
+          - not_null
+
+  - name: fct_top_stage_dropoff_reason_daily
+    description: "Daily top stage drop-off reason (worst stage by dropoff rate)."
+    columns:
+      - name: event_date
+        tests: [not_null]
+      - name: top_stage_dropoff
+        tests: [not_null]
+      - name: top_dropoff_rate
+        tests: [not_null]
+
+  - name: fct_worst_dropoff_reason_daily
+    description: "Worst (highest count) drop-off reason per day."
+    columns:
+      - name: event_date
+        tests:
+          - not_null
+      - name: stage
+        tests:
+          - not_null
+      - name: dropoff_reason
+        tests:
+          - not_null
+      - name: dropoff_candidates
+        tests:
+          - not_null
+
