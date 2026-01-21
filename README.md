@@ -37,6 +37,9 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
 ### Looker Studio — Hiring Funnel Overview (Dashboard Proof)
 ![Hiring Funnel Overview](14_looker_hiring_funnel_overview.png)
 
+✅ dbt tests (People Analytics dbt subproject): PASS=46, WARN=0, ERROR=0  
+![dbt test pass](proof/people_analytics_dbt/11_dbt_test_pass_46.png)
+
 
 ---
 
