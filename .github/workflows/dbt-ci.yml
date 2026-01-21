@@ -36,9 +36,10 @@ jobs:
             --profiles-dir "${{ github.workspace }}/.github/profiles" \
             --no-use-colors
 
-      - name: dbt parse
-        run: |
-          dbt parse \
+            - name: dbt build (CI)
+         run: |
+          dbt build \
             --project-dir "${{ github.workspace }}/domains/people_analytics" \
             --profiles-dir "${{ github.workspace }}/.github/profiles" \
             --no-use-colors
+
