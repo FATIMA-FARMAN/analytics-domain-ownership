@@ -1,4 +1,4 @@
-core_rhythm:
+people_analytics_dbt:
   target: ci
   outputs:
     ci:
