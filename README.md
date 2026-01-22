@@ -74,6 +74,9 @@ Proof:
 - dbt run: `proof/dbt_run_success.png`
 - dbt test: `proof/dbt_test_pass_9.png`
 
+## QA proof (dbt)
+- Automated QA runner: `python qa/run_qa.py`
+- **dbt test PASS=13**
 
 ### Dashboard Proof
 ![Hiring Funnel Overview](14_looker_hiring_funnel_overview.png)
@@ -189,8 +192,4 @@ flowchart LR
   D --> E[QA report: qa/reports/qa_report.md]
 ```
 
-
-## QA proof (dbt)
-- Automated QA runner: `python qa/run_qa.py`
-- **dbt test PASS=13**
 
