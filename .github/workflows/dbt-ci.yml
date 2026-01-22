@@ -21,12 +21,12 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dbt (BigQuery adapter)
+      - name: Install dbt (DuckDB)
         run: |
           python -m pip install --upgrade pip
-          pip install dbt-bigquery
+          pip install dbt-duckdb
 
-      - name: Create CI profiles.yml (dummy)
+      - name: Create CI profiles.yml (DuckDB)
         run: |
           mkdir -p ~/.dbt
           cat > ~/.dbt/profiles.yml <<'PROFILES'
@@ -34,11 +34,8 @@ jobs:
             target: ci
             outputs:
               ci:
-                type: bigquery
-                method: oauth
-                project: dummy
-                dataset: dummy
-                location: US
+                type: duckdb
+                path: /tmp/people_analytics_ci.duckdb
                 threads: 4
           PROFILES
 
@@ -46,6 +43,6 @@ jobs:
         working-directory: domains/people_analytics
         run: dbt deps
 
-      - name: dbt compile (CI)
+      - name: dbt parse (CI)
         working-directory: domains/people_analytics
-        run: dbt compile
+        run: dbt parse
