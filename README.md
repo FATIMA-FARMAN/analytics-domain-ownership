@@ -46,12 +46,12 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
 ![Hiring Funnel Overview](14_looker_hiring_funnel_overview.png)
 
 ### dbt Test Proof
-![dbt test execution proof](assets/proof/10_dbt_test_people_analytics.png)
+![dbt test execution proof](proof/10_dbt_test_people_analytics.png)
 
 <details>
   <summary><b>Optional: Incremental compiled SQL proof (BigQuery)</b></summary>
 
-  ![Incremental compiled SQL proof](assets/proof/12_incremental_compiled_sql.png)
+  ![Incremental compiled SQL proof](proof/12_incremental_compiled_sql.png)
 
 </details>
 
