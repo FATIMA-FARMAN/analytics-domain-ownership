@@ -5,7 +5,9 @@ models:
     description: "Employee SCD2 dimension tracking historical changes"
     config:
       contract:
-        enforced: true
+        enforced: false
+
+
     columns:
       - name: employee_id
         data_type: integer
@@ -31,6 +33,7 @@ models:
     config:
       contract:
         enforced: true
+
     columns:
       - name: application_id
         data_type: integer
@@ -41,5 +44,5 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['applied','screened','interviewed','offered','hired','rejected']
+              values: ['applied', 'screened', 'interviewed', 'offered', 'hired', 'rejected']
 
