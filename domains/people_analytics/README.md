@@ -18,23 +18,23 @@ This repository demonstrates an analytics engineering workflow using **dbt** on 
 4. Start Airflow and trigger the DAG from the UI.
 
 ## Proof screenshots
-Add screenshots into `docs/screenshots/` and reference them here (Airflow UI run, dbt run graph, BigQuery tables/views).
+Add screenshots into `proof/` and reference them here (Airflow UI run, dbt run graph, BigQuery tables/views).
 ## Proof (Git Clean State)
-![git status clean](docs/screenshots/01_git_status_clean.png)
+![git status clean](proof/01_git_status_clean.png)
 
 ## Airflow Orchestration Proof
 
 **Airflow DAGs registered**
-![Airflow DAGs list](docs/screenshots/02_airflow_dags_list.png)
+![Airflow DAGs list](proof/02_airflow_dags_list.png)
 
 **Successful run**
-![Airflow run success](docs/screenshots/03_airflow_run_success.png)
+![Airflow run success](proof/03_airflow_run_success.png)
 
 ## Airflow Orchestration Proof (Local)
 
 Airflow DAG executed successfully (dbt deps → dbt run → dbt test):
 
-![Airflow DAG Proof](docs/screenshots/08_airflow_ui_dag_loaded.png)
+![Airflow DAG Proof](proof/08_airflow_ui_dag_loaded.png)
 
 ![dbt CI (PR checks)](https://github.com/FATIMA-FARMAN/people-analytics-dbt-bigquery/actions/workflows/ci.yml/badge.svg)
 ![dbt CI (PR checks)](https://github.com/FATIMA-FARMAN/people-analytics-dbt-bigquery/actions/workflows/ci.yml/badge.svg)
