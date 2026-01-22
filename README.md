@@ -17,7 +17,32 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
 - Ships **verifiable proof**, not claims
 
 ---
+---
 
+## Quickstart (run locally)
+
+### Prerequisites
+- Python 3.10+
+- dbt-core + dbt-bigquery
+- A BigQuery project + dataset (Sandbox works for compile + full-refresh)
+
+### Setup
+```bash
+# clone
+git clone https://github.com/FATIMA-FARMAN/analytics-domain-ownership.git
+cd analytics-domain-ownership
+
+# go into the domain project
+cd domains/people_analytics
+
+# create venv
+python -m venv .venv
+source .venv/bin/activate
+
+# install deps
+pip install -r requirements.txt
+dbt deps
+---
 ## Proof / Evidence (receipts)
 
 - ✅ dbt build success (BigQuery) — PASS=20, ERROR=0  
@@ -58,8 +83,6 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
 
 </details>
 
-
-
 ---
 
 ## What this project demonstrates
@@ -74,7 +97,8 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
   **Schema contracts and dbt tests** enforce reliability for downstream consumers. Coverage includes standard constraints like **`not_null`**, **`unique`**, and **`accepted_values`**, plus **model-level contracts** where appropriate for “analytics-ready” tables.
 
 - **Operational workflows**  
-  **Airflow DAGs** orchestrate dbt runs/tests to demonstrate production-style operations. Generated artifacts (e.g., `venv/`, `logs/`, `target/`) are excluded from version control to
+Airflow DAGs orchestrate dbt runs/tests to demonstrate production-style operations. Generated artifacts (e.g., `venv/`, `logs/`, `target/`) are excluded from version control to keep the repository clean and deterministic, while proof screenshots and compiled SQL artifacts are committed under `assets/proof/` and `docs/screenshots/`.
+
 ----------
 
 analytics-domain-ownership/
