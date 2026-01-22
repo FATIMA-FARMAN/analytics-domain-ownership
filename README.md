@@ -62,6 +62,17 @@ Add reproducible local run steps and complete the operational workflow sentence.
 - Incremental model: `domains/people_analytics/models/marts/fct_hiring_funnel_incremental.sql`
 - Incremental seed: `domains/people_analytics/seeds/hiring_events_incremental_demo.csv`
 - Contracts/tests: `domains/people_analytics/models/marts/schema.yml`
+## Sandbox execution notes (BigQuery)
+
+This repo is executed using **BigQuery Sandbox** (billing disabled). BigQuery Sandbox restricts **DML** operations such as **MERGE/INSERT/UPDATE**, which affects dbt **incremental models** and **snapshots**.
+
+- Incremental models are materialized as **TABLE** in sandbox mode to avoid MERGE-based incremental runs.
+- Snapshots are disabled in sandbox mode and moved to `snapshots_DISABLED/`.
+- The same SQL patterns run normally in a billed environment.
+
+Proof:
+- dbt run: `proof/dbt_run_success.png`
+- dbt test: `proof/dbt_test_pass_9.png`
 
 
 ### Dashboard Proof
