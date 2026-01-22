@@ -1,3 +1,9 @@
+models:
+  people_analytics_dbt:
+    marts:
+      dim_employee_scd2:
+        +enabled: false
+
 name: "people_analytics_dbt"
 version: "1.0.0"
 config-version: 2
