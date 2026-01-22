@@ -18,27 +18,35 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
 
 ---
 
-## Proof / Evidence (recruiter scan)
+## Proof / Evidence (receipts)
 
-- ✅ **dbt test execution proof (PASS=13)**  
-  - ![dbt test execution proof](assets/proof/10_dbt_test_people_analytics.png)
+**Fast recruiter scan (verifiable assets):**
+- ✅ dbt tests PASS=13 → [`assets/proof/10_dbt_test_people_analytics.png`](assets/proof/10_dbt_test_people_analytics.png)
+- ✅ Airflow DAG success → [`proof/airflow_dag_success.png`](proof/airflow_dag_success.png)
+- ✅ Looker dashboard → [`14_looker_hiring_funnel_overview.png`](14_looker_hiring_funnel_overview.png)
+- ✅ CI passing → GitHub Actions badge above
 
-- ✅ **Incremental compiled SQL proof (BigQuery Sandbox)**  
-  - `assets/proof/compiled_fct_hiring_funnel_incremental.sql`  
-  - ![Incremental compiled SQL proof](assets/proof/12_incremental_compiled_sql.png)
+**Key implementation files (signals engineering depth):**
+- Incremental model → `domains/people_analytics/models/marts/fct_hiring_funnel_incremental.sql`
+- Incremental seed → `domains/people_analytics/seeds/hiring_events_incremental_demo.csv`
+- Contracts/tests → `domains/people_analytics/models/marts/schema.yml`
 
-- ✅ **Incremental demo seed + incremental model implementation**  
-  - `domains/people_analytics/seeds/hiring_events_incremental_demo.csv`  
-  - `domains/people_analytics/models/marts/fct_hiring_funnel_incremental.sql`
-
-- ✅ **Contracts/tests hardened for key marts**  
-  - `domains/people_analytics/models/marts/schema.yml` (key marts + contract-style checks)
-
-### Looker Studio — Hiring Funnel Overview (Dashboard Proof)
+### Dashboard Proof
 ![Hiring Funnel Overview](14_looker_hiring_funnel_overview.png)
 
-✅ dbt tests (People Analytics dbt subproject): PASS=46, WARN=0, ERROR=0  
-![dbt test pass](proof/people_analytics_dbt/11_dbt_test_pass_46.png)
+### dbt Test Proof
+![dbt test execution proof](assets/proof/10_dbt_test_people_analytics.png)
+
+<details>
+  <summary><b>Optional: Incremental compiled SQL proof (BigQuery)</b></summary>
+
+  ![Incremental compiled SQL proof](assets/proof/12_incremental_compiled_sql.png)
+
+</details>
+
+
+</details>
+
 
 
 ---
