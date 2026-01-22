@@ -22,7 +22,7 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
 
 - ✅ dbt build success (BigQuery) — PASS=20, ERROR=0  
   - proof/13_dbt_build_success_no_snapshots.png  
-  - Note: snapshots + incremental execution excluded due to BigQuery Sandbox DML limits
+  - Note: On BigQuery Sandbox, incremental MERGE/UPDATE DML can be restricted, so this repo demonstrates incremental logic    via compiled SQL + full-refresh build proof; in production, incremental runs execute normally with proper permissions.
 
 - ✅ dbt tests passing — PASS=13  
   - proof/10_dbt_test_people_analytics.png
