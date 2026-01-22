@@ -20,7 +20,8 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
 
 ## Proof / Evidence (receipts)
 
-**Fast recruiter scan (verifiable assets):**
+- ✅ dbt build success (BigQuery) — PASS=20, ERROR=0 (snapshots/incremental excluded due to BigQuery free-tier DML limits)
+  - proof/13_dbt_build_success_no_snapshots.png
 - ✅ dbt tests PASS=13 → [`assets/proof/10_dbt_test_people_analytics.png`](assets/proof/10_dbt_test_people_analytics.png)
 - ✅ Airflow DAG success → [`proof/airflow_dag_success.png`](proof/airflow_dag_success.png)
 - ✅ Looker dashboard → [`14_looker_hiring_funnel_overview.png`](14_looker_hiring_funnel_overview.png)
