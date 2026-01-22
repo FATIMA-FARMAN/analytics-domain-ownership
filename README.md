@@ -21,27 +21,24 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
 
 ## Quickstart (run locally)
 
-### Prerequisites
-- Python 3.10+
-- dbt-core + dbt-bigquery
-- A BigQuery project + dataset (Sandbox works for compile + full-refresh)
-
-### Setup
 ```bash
-# clone
 git clone https://github.com/FATIMA-FARMAN/analytics-domain-ownership.git
 cd analytics-domain-ownership
-
-# go into the domain project
 cd domains/people_analytics
 
-# create venv
 python -m venv .venv
 source .venv/bin/activate
 
-# install deps
 pip install -r requirements.txt
 dbt deps
+dbt parse
+dbt compile --select fct_hiring_funnel_incremental
+dbt run --select fct_hiring_funnel_incremental --full-refresh
+dbt test
+python ../../qa/run_qa.py
+
+Add reproducible local run steps and complete the operational workflow sentence.
+
 ---
 ## Proof / Evidence (receipts)
 
