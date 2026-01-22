@@ -20,16 +20,27 @@ End-to-end analytics engineering portfolio demonstrating **domain ownership** fo
 
 ## Proof / Evidence (receipts)
 
-**Fast recruiter scan (verifiable assets):**
-- ✅ dbt tests PASS=13 → [`assets/proof/10_dbt_test_people_analytics.png`](assets/proof/10_dbt_test_people_analytics.png)
-- ✅ Airflow DAG success → [`proof/airflow_dag_success.png`](proof/airflow_dag_success.png)
-- ✅ Looker dashboard → [`14_looker_hiring_funnel_overview.png`](14_looker_hiring_funnel_overview.png)
-- ✅ CI passing → GitHub Actions badge above
+- ✅ dbt build success (BigQuery) — PASS=20, ERROR=0  
+  - proof/13_dbt_build_success_no_snapshots.png  
+  - Note: snapshots + incremental execution excluded due to BigQuery Sandbox DML limits
 
-**Key implementation files (signals engineering depth):**
-- Incremental model → `domains/people_analytics/models/marts/fct_hiring_funnel_incremental.sql`
-- Incremental seed → `domains/people_analytics/seeds/hiring_events_incremental_demo.csv`
-- Contracts/tests → `domains/people_analytics/models/marts/schema.yml`
+- ✅ dbt tests passing — PASS=13  
+  - proof/10_dbt_test_people_analytics.png
+
+- ✅ Airflow DAG run success (orchestration proof)  
+  - proof/airflow_dag_success.png
+
+- ✅ Looker executive dashboard (hiring funnel overview)  
+  - proof/14_looker_hiring_funnel_overview.png
+
+- ✅ CI passing — GitHub Actions badge above
+
+## Key implementation files (signals engineering depth)
+
+- Incremental model: `domains/people_analytics/models/marts/fct_hiring_funnel_incremental.sql`
+- Incremental seed: `domains/people_analytics/seeds/hiring_events_incremental_demo.csv`
+- Contracts/tests: `domains/people_analytics/models/marts/schema.yml`
+
 
 ### Dashboard Proof
 ![Hiring Funnel Overview](14_looker_hiring_funnel_overview.png)
