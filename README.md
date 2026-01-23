@@ -180,6 +180,9 @@ To avoid unnecessary warehouse spend on every change:
 - Run **targeted** `dbt test` on key marts instead of full refreshes
 -------
 
+
+```md
+
 ## Architecture & lineage
 
 See `docs/lineage.md` for full lineage.
@@ -190,6 +193,10 @@ flowchart LR
   B --> C[Intermediate: int_*]
   C --> D[Marts: dim_* / fct_*]
   D --> E[QA report: qa/reports/qa_report.md]
-```
+
+
+
+
+
 
 
