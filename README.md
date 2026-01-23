@@ -91,9 +91,6 @@ Proof:
 
 </details>
 
-
-</details>
-
 ---
 
 ## What this project demonstrates
@@ -179,41 +176,15 @@ To avoid unnecessary warehouse spend on every change:
 - GitHub Actions runs `dbt deps` + `dbt parse` as lightweight validation
 - Run **targeted** `dbt test` on key marts instead of full refreshes
 -------
-``mermaid
-flowchart TB
 
-  subgraph ORCH["Airflow Orchestration"]
-    DAG["dag_dbt_people_domain"] --> DEPS["dbt deps"] --> RUN["dbt run"] --> TEST["dbt test"]
-  end
+## Architecture & lineage
 
-  subgraph SRC["Sources"]
-    HRIS["HRIS"]
-    ATS["ATS"]
-    PERF["Performance"]
-    COMP["Compensation"]
-  end
+See `docs/lineage.md` for full lineage.
 
-  subgraph STG["Staging"]
-    STG_HRIS["stg_hris_employees"]
-    STG_ATS["stg_ats_candidates"]
-    STG_PERF["stg_perf_reviews"]
-    STG_COMP["stg_comp_salaries"]
-  end
 
-  subgraph INT["Intermediate"]
-    INT_EMP["int_employee_enriched"]
-    INT_FUN["int_hiring_funnel_steps"]
-  end
-
-  subgraph MART["Marts"]
-    DIM_EMP["dim_employee"]
-    FCT_FUN["fct_hiring_funnel"]
-  end
-
-  HRIS --> STG_HRIS
-  ATS --> STG_ATS
-  PERF --> STG_PERF
-  COMP --> STG_COMP
-
-  STG_HRIS --> INT_EMP --> DIM_EMP
-  STG_ATS --> INT_FUN --> FCT_FUN
+```mermaid
+flowchart LR
+  A[Sources] --> B[Staging: stg_*]
+  B --> C[Intermediate: int_*]
+  C --> D[Marts: dim_* / fct_*]
+  D --> E[QA report: qa/reports/qa_report.md]
