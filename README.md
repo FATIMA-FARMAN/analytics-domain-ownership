@@ -179,12 +179,55 @@ To avoid unnecessary warehouse spend on every change:
 
 ## Architecture & lineage
 
-See `docs/lineage.md` for full lineage.
-
-
 ```mermaid
 flowchart LR
-  A[Sources] --> B[Staging: stg_*]
-  B --> C[Intermediate: int_*]
-  C --> D[Marts: dim_* / fct_*]
-  D --> E[QA report: qa/reports/qa_report.md]
+  %% --- SOURCES ---
+  subgraph S[Sources]
+    HRIS[HRIS]
+    ATS[ATS]
+    PERF[Performance]
+    COMP[Compensation]
+  end
+
+  %% --- STAGING ---
+  subgraph STG[Staging (stg_*)]
+    stg_emp[stg_employees]
+    stg_cand[stg_candidates]
+    stg_app[stg_applications]
+  end
+
+  %% --- INTERMEDIATE ---
+  subgraph INT[Intermediate (int_*)]
+    int_emp[int_employees]
+    int_funnel[int_hiring_funnel_steps]
+  end
+
+  %% --- MARTS ---
+  subgraph M[Marts (dim_* / fct_*)]
+    dim_emp[dim_employee_scd2]
+    fct_funnel[fct_hiring_funnel_incremental]
+  end
+
+  %% --- OUTPUTS ---
+  subgraph O[Outputs]
+    QA[QA report: qa/reports/qa_report.md]
+    BI[Looker dashboard]
+  end
+
+  %% --- LINKS ---
+  HRIS --> stg_emp
+  ATS --> stg_cand
+  ATS --> stg_app
+  PERF --> stg_emp
+  COMP --> stg_emp
+
+  stg_emp --> int_emp --> dim_emp
+  stg_app --> int_funnel --> fct_funnel
+  stg_cand --> int_funnel
+
+  dim_emp --> QA
+  fct_funnel --> QA
+
+  dim_emp --> BI
+  fct_funnel --> BI_
+
