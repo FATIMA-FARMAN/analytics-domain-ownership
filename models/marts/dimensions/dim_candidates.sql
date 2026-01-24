@@ -1,5 +1,4 @@
 -- Dimension: Candidate master data
--- Type 2 SCD (via snapshots in production)
 
 {{
     config(
@@ -42,7 +41,6 @@ final as (
             day
         ) as days_in_pipeline,
         
-        -- Audit
         current_timestamp() as dbt_updated_at
         
     from candidate_events

@@ -185,3 +185,21 @@ models:
         description: "Total days from application to hire (or current date)"
         tests:
           - not_null
+
+  - name: dim_candidates
+    description: |
+      Candidate Dimension - Type 1 SCD
+      One row per candidate with aggregated funnel metrics
+      
+    columns:
+      - name: candidate_id
+        description: "Unique candidate identifier (primary key)"
+        tests:
+          - unique
+          - not_null
+      - name: candidate_status
+        description: "Current status (Hired, Interviewed, etc.)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Hired', 'Offered but not hired', 'Interviewed', 'Screened', 'Applied only']
