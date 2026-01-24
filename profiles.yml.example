@@ -1,0 +1,58 @@
+# profiles.yml.example
+# Copy this to ~/.dbt/profiles.yml and update with your credentials
+
+people_analytics:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: your-gcp-project-id  # e.g., core-rhythm-462516-n5
+      dataset: people_analytics      # Default schema
+      threads: 4
+      timeout_seconds: 300
+      location: US                   # or EU, asia-northeast1, etc.
+      priority: interactive
+      keyfile: /path/to/service-account-key.json
+      
+    prod:
+      type: bigquery
+      method: service-account
+      project: your-gcp-project-id
+      dataset: people_analytics_prod
+      threads: 8
+      timeout_seconds: 600
+      location: US                   # or EU, asia-northeast1, etc.
+      priority: interactive
+      keyfile: /path/to/service-account-key.json
+      
+    prod:
+      type: bigquery
+      method: service-account
+      project: your-gcp-project-id
+      dataset: people_analytics_prod
+      threads: 8
+      timeout_seconds: 600
+      location: US
+      priority: batch
+      keyfile: /path/to/prod-service-account-key.json
+
+  target: dev
+
+# Alternative: OAuth authentication (no service account needed)
+# people_analytics:
+#   outputs:
+#     dev:
+#       type: bigquery
+#       method: oauth
+#       project: your-gcp-project-id
+#       dataset: people_analytics
+#       threads: 4
+#       timeout_seconds: 300
+#   target: dev
+
+# Setup instructions:
+# 1. Create GCP service account with BigQuery permissions
+# 2. Download JSON key file
+# 3. Update 'project' and 'keyfile' paths above
+# 4. Copy to ~/.dbt/profiles.yml
+# 5. Run: dbt debug
