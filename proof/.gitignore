@@ -1,3 +1,5 @@
 *.png
 proof/
 proof_backup/
+*.png
+Screenshot*
