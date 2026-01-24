@@ -1,0 +1,90 @@
+version: 2
+
+models:
+  - name: fct_hiring_funnel_incremental
+    description: >
+      Hiring funnel fact table tracking candidates through recruitment stages.
+      Incrementally updated daily with new events. Partitioned by event_date,
+      clustered by candidate_id for query optimization.
+
+    config:
+      contract:
+        enforced: true
+      materialized: incremental
+      unique_key: ['candidate_id', 'event_date']
+      partition_by:
+        field: event_date
+        data_type: date
+        granularity: day
+      cluster_by: ['candidate_id', 'department_id']
+
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: ['candidate_id', 'event_date']
+
+    columns:
+      - name: candidate_id
+        description: Unique identifier for each candidate
+        data_type: string
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+
+      - name: event_date
+        description: Date when the hiring event occurred
+        data_type: date
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+
+      - name: event_type
+        description: Type of hiring event (application, screen, interview, offer, hire)
+        data_type: string
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['application', 'screen', 'interview', 'offer', 'hire']
+
+      - name: department_id
+        description: Foreign key to dim_departments
+        data_type: string
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_departments')
+              field: department_id
+
+      - name: recruiter_id
+        description: Employee ID of the recruiter handling this candidate
+        data_type: string
+        tests:
+          - relationships:
+              to: ref('dim_employees')
+              field: employee_id
+
+      - name: days_in_stage
+        description: Number of days spent in this hiring stage
+        data_type: int64
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 365
+              inclusive: true
+
+      - name: conversion_flag
+        description: Boolean indicating if candidate advanced to next stage
+        data_type: boolean
+
+      - name: _loaded_at
+        description: Timestamp when record was loaded to warehouse
+        data_type: timestamp
+        constraints:
+          - type: not_null
+        tests:
+
+
+:q!
