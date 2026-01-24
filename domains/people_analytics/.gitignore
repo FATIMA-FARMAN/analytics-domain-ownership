@@ -50,3 +50,6 @@ people_analytics.duckdb
 .profiles/user.yml
 .profiles/.user.yml
 dbt_packages/
+
+# local junk
+snapshots/
