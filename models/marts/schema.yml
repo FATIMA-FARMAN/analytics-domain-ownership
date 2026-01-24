@@ -1,0 +1,138 @@
+version: 2
+
+models:
+  - name: fct_hiring_funnel_incremental
+    description: |
+      **Hiring Funnel Fact Table** (Incremental)
+      
+      Tracks candidate progression through hiring stages with event-level granularity.
+      Each row represents a single hiring event (applied, screened, interviewed, etc.).
+      
+      **Grain:** One row per hiring event
+      **Refresh:** Incremental (daily), 3-day lookback window
+      **Partitioned by:** event_date (day)
+      **Clustered by:** stage, department
+      
+      **Business Logic:**
+      - Calculates days since initial application
+      - Provides boolean flags for funnel stage counts
+      - Enriched with stage ordering for conversion analysis
+      
+    config:
+      materialized: incremental
+      
+    columns:
+      - name: event_id
+        description: "Unique identifier for each hiring event (primary key)"
+        tests:
+          - unique
+          - not_null
+          
+      - name: candidate_id
+        description: "Foreign key to candidate dimension"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_hiring_events')
+              field: candidate_id
+              
+      - name: recruiter_id
+        description: "ID of recruiter managing this candidate"
+        tests:
+          - not_null
+          
+      - name: job_requisition_id
+        description: "ID of job posting candidate applied to"
+        
+      - name: event_type
+        description: "Type of hiring event (status_change, interview_scheduled, etc.)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['status_change', 'interview_scheduled', 'offer_extended', 'hired', 'rejected']
+              
+      - name: stage
+        description: "Current hiring stage"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['applied', 'screened', 'interviewed', 'offered', 'hired', 'rejected']
+              
+      - name: stage_order
+        description: "Numeric ordering of stages for funnel analysis (1=applied, 5=hired)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+              
+      - name: department
+        description: "Department the candidate is applying to (Engineering, Sales, etc.)"
+        tests:
+          - not_null
+          
+      - name: event_date
+        description: "Date the hiring event occurred (partition key)"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "<= current_date()"
+              
+      - name: created_at
+        description: "Timestamp when this record was created in source system"
+        tests:
+          - not_null
+          
+      - name: days_since_application
+        description: "Number of days elapsed since candidate's initial application"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 365  # Cap at 1 year
+              
+      - name: is_first_event
+        description: "Boolean flag: true if this is the candidate's first event"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+              
+      - name: applied_count
+        description: "Metric: 1 if stage='applied', else 0"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+              
+      - name: screened_count
+        description: "Metric: 1 if stage='screened', else 0"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+              
+      - name: interviewed_count
+        description: "Metric: 1 if stage='interviewed', else 0"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+              
+      - name: offered_count
+        description: "Metric: 1 if stage='offered', else 0"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+              
+      - name: hired_count
+        description: "Metric: 1 if stage='hired', else 0"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+              
+      - name: dbt_updated_at
+        description: "Timestamp when dbt last updated this record"
+        tests:
+          - not_null
