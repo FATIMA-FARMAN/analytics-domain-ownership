@@ -1,0 +1,73 @@
+name: 'people_analytics'
+version: '1.0.0'
+config-version: 2
+
+profile: 'people_analytics'
+
+# Model paths
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Materialization defaults by layer
+models:
+  people_analytics:
+    # Staging layer: views for cost efficiency
+    staging:
+      +materialized: view
+      +schema: staging
+      
+    # Intermediate layer: tables when reused, views otherwise
+    intermediate:
+      +materialized: table
+      +schema: intermediate
+      
+    # Marts layer: tables for performance
+    marts:
+      +materialized: table
+      +schema: marts
+      
+      # Dimensions typically don't need frequent rebuilds
+      dimensions:
+        +materialized: table
+        
+      # Facts may use incremental strategies
+      facts:
+        +materialized: incremental
+        +on_schema_change: "append_new_columns"
+        +incremental_strategy: "merge"
+        +unique_key: "event_id"
+
+# Snapshot configuration
+snapshots:
+  people_analytics:
+    +target_schema: snapshots
+    +strategy: timestamp
+    +updated_at: updated_at
+
+# Test configuration
+tests:
+  people_analytics:
+    +severity: error
+    +store_failures: true
+
+# Seeds configuration
+seeds:
+  people_analytics:
+    +schema: seeds
+    +quote_columns: false
+
+# Vars for environment-specific config
+vars:
+  current_date: "CURRENT_DATE()"
+  incremental_lookback_days: 3
+  use_clustering: true
+  use_partitioning: true
