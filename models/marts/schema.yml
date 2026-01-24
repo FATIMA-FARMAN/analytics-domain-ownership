@@ -136,3 +136,52 @@ models:
         description: "Timestamp when dbt last updated this record"
         tests:
           - not_null
+
+  - name: dim_candidates
+    description: |
+      **Candidate Dimension Table**
+      
+      Type 1 SCD containing current state of each candidate.
+      Aggregates funnel metrics to candidate level.
+      
+      **Grain:** One row per candidate
+      **Refresh:** Full rebuild daily
+      
+    columns:
+      - name: candidate_id
+        description: "Unique candidate identifier (primary key)"
+        tests:
+          - unique
+          - not_null
+          
+      - name: first_application_date
+        description: "Date candidate first applied"
+        tests:
+          - not_null
+          
+      - name: last_event_date
+        description: "Most recent hiring event date"
+        tests:
+          - not_null
+          
+      - name: hire_date
+        description: "Date candidate was hired (null if not hired)"
+        
+      - name: furthest_stage_reached
+        description: "Highest stage number achieved (1-5)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+              
+      - name: candidate_status
+        description: "Current candidate status (Hired, Offered but not hired, etc.)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Hired', 'Offered but not hired', 'Interviewed', 'Screened', 'Applied only']
+              
+      - name: days_in_pipeline
+        description: "Total days from application to hire (or current date)"
+        tests:
+          - not_null
