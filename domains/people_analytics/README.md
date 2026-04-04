@@ -18,7 +18,6 @@ This repository demonstrates an analytics engineering workflow using **dbt** on 
 4. Start Airflow and trigger the DAG from the UI.
 
 ## Proof screenshots
-Add screenshots into `proof/` and reference them here (Airflow UI run, dbt run graph, BigQuery tables/views).
 ## Proof (Git Clean State)
 ![git status clean](proof/01_git_status_clean.png)
 
